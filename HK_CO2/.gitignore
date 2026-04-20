@@ -1,0 +1,8 @@
+venv/
+__pycache__/
+*.pyc
+*.h5
+*.pkl
+*.png
+checkpoints/
+checkpoints_v3/
