@@ -436,12 +436,12 @@ export function CarbonCalculator() {
                         <ArrowLeft className="mr-2 h-4 w-4" />
                         Recalculate
                       </Button>
-                      <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto" asChild>
+                      {/* <Button className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto" asChild>
                         <a href="#contribute">
                           Offset My Footprint
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </a>
-                      </Button>
+                      </Button> */}
                     </div>
                   </CardContent>
                 </Card>

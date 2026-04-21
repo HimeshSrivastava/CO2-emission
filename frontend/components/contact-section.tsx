@@ -12,19 +12,19 @@ const contactInfo = [
   {
     icon: Mail,
     label: "Email",
-    value: "hello@carboniq.earth",
-    href: "mailto:hello@carboniq.earth",
+    value: "krishna.murari205@gmail.com",
+    href: "mailto:krishna.murari205@gmail.com",
   },
   {
     icon: Phone,
     label: "Phone",
-    value: "+1 (555) 123-4567",
+    value: "+91 9717228917",
     href: "tel:+15551234567",
   },
   {
     icon: MapPin,
     label: "Location",
-    value: "San Francisco, CA",
+    value: "Noida, India (201309)",
     href: "#",
   },
 ]

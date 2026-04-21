@@ -24,10 +24,10 @@ const badges = {
 }
 
 const impactStats = [
-  { label: "Total CO₂ Reduced", value: "2.5M", unit: "kg" },
-  { label: "Total Funds Raised", value: "$1.2M", unit: "" },
-  { label: "Trees Planted", value: "45K", unit: "+" },
-  { label: "Active Contributors", value: "12K", unit: "+" },
+  { label: "Total CO₂ Reduced", value: "5", unit: "kg" },
+  { label: "Total Funds Raised", value: "5", unit: "" },
+  { label: "Trees Planted", value: "15", unit: "+" },
+  { label: "Active Contributors", value: "5", unit: "+" },
 ]
 
 export function LeaderboardSection() {

@@ -58,7 +58,7 @@ function LiveCO2Counter() {
         <Globe className="h-6 w-6 text-primary" />
       </div>
       <div>
-        <p className="text-xs sm:text-sm text-muted-foreground">Global CO₂ Level (ppm)</p>
+        <p className="text-xs sm:text-sm text-muted-foreground">CO₂ Level (ppm)</p>
         <motion.p
           key={co2Level}
           initial={{ opacity: 0.5 }}
@@ -119,7 +119,7 @@ export function HeroSection() {
             </div>
             <div>
               <p className="text-xs text-muted-foreground">Trees Planted</p>
-              <p className="font-semibold text-foreground">1.2M+</p>
+              <p className="font-semibold text-foreground">12+</p>
             </div>
           </div>
         </div>
@@ -225,10 +225,10 @@ export function HeroSection() {
             className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8"
           >
             {[
-              { value: 50000, suffix: "+", label: "Active Users" },
-              { value: 2500000, suffix: "", label: "Tons CO₂ Tracked" },
-              { value: 180, suffix: "+", label: "Countries" },
-              { value: 98, suffix: "%", label: "Accuracy Rate" },
+              { value: 96.1, suffix: "%", label: "F Score" },
+              { value: 95.9, suffix: "%", label: "Recall Score" },
+              { value: 96.4, suffix: "%", label: "Precision Rate" },
+              { value: 92, suffix: "%", label: "Accuracy Rate" },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
