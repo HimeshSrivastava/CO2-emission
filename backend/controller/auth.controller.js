@@ -5,14 +5,8 @@ import generatewebtoken from "../Utils/generatewebtoken.js";
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, password, ConfirmPassword, gender } = req.body;
+        const { name, email, password} = req.body;
 
-   
-        if (password !== ConfirmPassword) {
-            return res.status(400).json({ error: "Passwords don't match" });
-        }
-
-       
         const user = await User.findOne({ email });
         console.log(user);
         if (user) {
@@ -28,7 +22,6 @@ export const signup = async (req, res) => {
             name,
             email,
             password: hashPassword,
-            gender,
         });
 
         console.log(newUser);
@@ -39,7 +32,6 @@ export const signup = async (req, res) => {
         return res.status(201).json({
             name: newUser.name,
             email: newUser.email,
-            gender: newUser.gender,
             token,
         });
     } catch (error) {
@@ -62,10 +54,11 @@ export const login = async (req, res) => {
       return res.status(401).json({ message: "User not found" });
     }
 
-    // password check (example)
-    if (password !== user.password) {
-      return res.status(401).json({ message: "Invalid credentials" });
-    }
+const isMatch = await bcrypt.compare(password, user.password);
+
+if (!isMatch) {
+  return res.status(401).json({ message: "Invalid credentials" });
+}
 
     return res.status(200).json({
       message: "Login successful",

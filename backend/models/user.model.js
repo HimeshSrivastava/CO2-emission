@@ -16,14 +16,7 @@ const userschema= new mongoose.Schema({
         required: true,
         minlength: 6,
     },
-    ConfirmPassword:{
-        type: String,
-    },
-    gender:{
-        type: String,
-        required: true,
-        enum:["Male","Female"],
-    },
+    
 },{timestamps:true});
 
 const User= mongoose.model("User",userschema);
