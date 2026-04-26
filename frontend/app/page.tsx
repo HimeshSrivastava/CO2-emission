@@ -1,3 +1,5 @@
+"use client";
+
 import { Navigation } from "@/components/navigation"
 import { HeroSection } from "@/components/hero-section"
 import { CO2Dashboard } from "@/components/co2-dashboard"
@@ -9,14 +11,25 @@ import { AwarenessSection } from "@/components/awareness-section"
 import { ContactSection } from "@/components/contact-section"
 import { Footer } from "@/components/footer"
 
+import { useEffect, useState } from "react";
+import PaymentButton from "@/components/PaymentButton";
+
 export default function HomePage() {
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    if (user?._id) {
+      setUserId(user._id);
+    }
+  }, []);
   return (
     <main className="min-h-screen">
       <Navigation />
       <HeroSection />
       <CO2Dashboard />
       <CarbonCalculator />
-      {/* <ContributionSection /> */}
+      <PaymentButton amount={500} />
       <LeaderboardSection />
       <WhatIfSimulator />
       <AwarenessSection />
