@@ -3,30 +3,19 @@ import crypto from "crypto";
 import Payment from "../models/payment.model.js";
 import User from "../models/user.model.js";
 
-// export const createOrder = async (req, res) => {
-//   try {
-//     const { amount } = req.body;
-
-//     const order = await razorpay.orders.create({
-//       amount: amount * 100,
-//       currency: "INR",
-//     });
-
-//     res.json(order);
-//   } catch (err) {
-//     res.status(500).json({ message: "Order failed" });
-//   }
-// };
-
 export const createOrder = async (req, res) => {
-  const { amount } = req.body;
+  try {
+    const { amount } = req.body;
 
-  const order = await razorpay.orders.create({
-    amount: amount * 100,
-    currency: "INR",
-  });
+    const order = await razorpay.orders.create({
+      amount: amount * 100,
+      currency: "INR",
+    });
 
-  res.json(order);
+    res.json(order);
+  } catch (err) {
+    res.status(500).json({ message: "Order failed" });
+  }
 };
 
 export const verifyPayment = async (req, res) => {
@@ -36,7 +25,6 @@ export const verifyPayment = async (req, res) => {
       razorpay_payment_id,
       razorpay_signature,
       userId,
-      amount,
     } = req.body;
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
@@ -50,19 +38,30 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ message: "Invalid payment" });
     }
 
-    // ✅ Save payment
-    await Payment.create({
-      userId,
-      amount,
+    // ✅ prevent duplicate
+    const existing = await Payment.findOne({
       paymentId: razorpay_payment_id,
     });
 
-    // ✅ Update leaderboard field
+    if (existing) {
+      return res.json({ success: true });
+    }
+
+    // ✅ get real amount from DB (recommended)
+    const orderData = await Order.findOne({ orderId: razorpay_order_id });
+
+    await Payment.create({
+      userId,
+      amount: orderData.amount / 100,
+      paymentId: razorpay_payment_id,
+    });
+
     await User.findByIdAndUpdate(userId, {
-      $inc: { totalPayment: amount },
+      $inc: { totalPayment: orderData.amount / 100 },
     });
 
     res.json({ success: true });
+
   } catch (err) {
     res.status(500).json({ message: "Verification failed" });
   }
