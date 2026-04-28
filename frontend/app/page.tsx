@@ -29,7 +29,7 @@ export default function HomePage() {
       <HeroSection />
       <CO2Dashboard />
       <CarbonCalculator />
-      <PaymentButton amount={500} />
+      <PaymentButton />
       <LeaderboardSection />
       <WhatIfSimulator />
       <AwarenessSection />
