@@ -6,14 +6,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 
 const leaderboardData = [
-  { rank: 1, name: "Sarah Chen", co2Offset: 12450, contribution: 2500, badge: "Impact Leader", anonymous: false },
-  { rank: 2, name: "Michael Torres", co2Offset: 9800, contribution: 1950, badge: "Climate Warrior", anonymous: false },
-  { rank: 3, name: "Anonymous", co2Offset: 8200, contribution: 1640, badge: "Climate Warrior", anonymous: true },
-  { rank: 4, name: "Emma Wilson", co2Offset: 7500, contribution: 1500, badge: "Climate Warrior", anonymous: false },
-  { rank: 5, name: "James Kim", co2Offset: 6100, contribution: 1220, badge: "Eco Champion", anonymous: false },
-  { rank: 6, name: "Anonymous", co2Offset: 5400, contribution: 1080, badge: "Eco Champion", anonymous: true },
-  { rank: 7, name: "Olivia Brown", co2Offset: 4800, contribution: 960, badge: "Beginner", anonymous: false },
-  { rank: 8, name: "Lucas Martinez", co2Offset: 4200, contribution: 840, badge: "Beginner", anonymous: false },
+  { rank: 1, name: "Omshiv sharma", co2Offset: 3000, contribution: 3000, badge: "Impact Leader", anonymous: false },
+  { rank: 2, name: "Krishank Singh", co2Offset: 2000, contribution: 2000, badge: "Climate Warrior", anonymous: false },
+  { rank: 3, name: "Himesh Srivastava", co2Offset: 1000, contribution: 1000, badge: "Climate Warrior", anonymous: true },
+  { rank: 4, name: "Pawan Kasaudhan", co2Offset: 500, contribution: 500, badge: "Climate Warrior", anonymous: false },
+  { rank: 5, name: "kritika kargeti", co2Offset: 100, contribution: 220, badge: "Eco Champion", anonymous: false },
+  { rank: 6, name: "shyam ravi krishan", co2Offset: 400, contribution: 180, badge: "Eco Champion", anonymous: true },
+  { rank: 7, name: "Olivia Brown", co2Offset: 400, contribution: 160, badge: "Beginner", anonymous: false },
+  { rank: 8, name: "Lucas Martinez", co2Offset: 200, contribution: 140, badge: "Beginner", anonymous: false },
 ]
 
 const badges = {
@@ -162,7 +162,7 @@ export function LeaderboardSection() {
                             <p className="text-xs text-muted-foreground">CO₂ Offset</p>
                           </div>
                           <div className="text-right">
-                            <p className="font-semibold text-primary">${user.contribution.toLocaleString()}</p>
+                            <p className="font-semibold text-primary">{user.contribution.toLocaleString()}</p>
                             <p className="text-xs text-muted-foreground">Contributed</p>
                           </div>
                         </div>

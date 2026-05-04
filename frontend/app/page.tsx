@@ -29,7 +29,8 @@ export default function HomePage() {
       <HeroSection />
       <CO2Dashboard />
       <CarbonCalculator />
-      <PaymentButton />
+      <ContributionSection />
+      {/* <PaymentButton /> */}
       <LeaderboardSection />
       <WhatIfSimulator />
       <AwarenessSection />

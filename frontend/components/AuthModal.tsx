@@ -53,6 +53,8 @@ export default function AuthModal({ isOpen, onClose }: AuthModalProps) {
         return;
       }
 
+      localStorage.setItem("user", JSON.stringify(data));
+
       console.log("Success:", data);
 
       onClose(); 

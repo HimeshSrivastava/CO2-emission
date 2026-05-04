@@ -76,16 +76,57 @@ export function ContributionSection() {
   const [customAmount, setCustomAmount] = useState("")
   const [showConfirmation, setShowConfirmation] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [amount, setAmount] = useState<number | "">("");
 
-  const handleContribute = () => {
-    const amount = selectedTier ?? parseInt(customAmount)
-    if (amount && amount > 0) {
-      setIsProcessing(true)
-      setTimeout(() => {
-        setIsProcessing(false)
-        setShowConfirmation(true)
-      }, 1500)
-    }
+  const handleContribute = async () => {
+  console.log("Sending amount:", amount);
+
+  if (!amount || Number(amount) <= 0) {
+    alert("Invalid amount");
+    return;
+  }
+
+  const res = await fetch("http://localhost:4000/api/payment/create-order", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+    body: JSON.stringify({ amount: Number(amount) }),
+  });
+
+  if (!res.ok) {
+    console.log("Backend failed");
+    return;
+  }
+
+  const order = await res.json();
+  console.log("Order from backend:", order);
+
+  // 🔥 Razorpay check
+  if (!(window as any).Razorpay) {
+    alert("Razorpay not loaded");
+    return;
+  }
+
+  const options = {
+    key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+    amount: order.amount,
+    currency: order.currency,
+    order_id: order.id,
+
+    handler: async function (response: any) {
+      console.log("Payment success:", response);
+    },
+
+    theme: {
+      color: "#3399cc",
+    },
+  };
+
+  const rzp = new (window as any).Razorpay(options);
+  rzp.open(); // 🔥 MOST IMPORTANT LINE
+
   }
 
   const finalAmount = (selectedTier ?? parseInt(customAmount)) || 0
@@ -125,10 +166,7 @@ export function ContributionSection() {
                         ? "border-primary shadow-lg scale-105"
                         : "hover:border-primary/50"
                     }`}
-                    onClick={() => {
-                      setSelectedTier(tier.amount)
-                      setCustomAmount("")
-                    }}
+                    onClick={() => setAmount(tier.amount)}
                   >
                     <CardContent className="p-6 text-center">
                       <div className="p-3 bg-primary/10 rounded-xl mb-4 inline-block">
@@ -153,14 +191,12 @@ export function ContributionSection() {
                   </label>
 
                   <Input
-                    type="number"
-                    placeholder="Enter amount"
-                    value={customAmount}
-                    onChange={(e) => {
-                      setCustomAmount(e.target.value)
-                      setSelectedTier(null)
-                    }}
-                  />
+  type="number"
+  placeholder="Enter amount"
+  value={amount || ""}
+  onChange={(e) => setAmount(Number(e.target.value))}
+/>
+                  
                 </CardContent>
               </Card>
 
@@ -175,12 +211,12 @@ export function ContributionSection() {
               <div className="text-center">
                 <Button
                   onClick={handleContribute}
-                  disabled={finalAmount <= 0 || isProcessing}
+                  // disabled={finalAmount <= 0 || isProcessing}
                   className="px-10 py-6 text-lg"
                 >
                   {isProcessing
                     ? "Processing..."
-                    : `Support Now $${finalAmount || 0} 🚀`}
+                    : `Support Now $${amount || 0} 🚀`}
                 </Button>
 
                 <p className="text-sm mt-3">

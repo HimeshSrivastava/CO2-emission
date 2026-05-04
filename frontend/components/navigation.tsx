@@ -1,11 +1,22 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Image from "next/image"
 import Link from "next/link"
 import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X, Leaf, BarChart3, Calculator, Heart, Trophy, Lightbulb, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import AuthModal from "@/components/AuthModal" // ✅ ADD THIS
+
+type User = {
+  name?: string;
+  profileImage?: string;
+};
+
+type Props = {
+  setAuthOpen: (value: boolean) => void;
+};
+
 
 const navItems = [
   { name: "Dashboard", href: "#dashboard", icon: BarChart3 },
@@ -19,6 +30,20 @@ const navItems = [
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const data = localStorage.getItem("user");
+
+    if (data) {
+      try {
+        const parsed: User = JSON.parse(data);
+        setUser(parsed);
+      } catch (err) {
+        console.error("Invalid user data");
+      }
+    }
+  }, []);
 
   // ✅ NEW STATE
   const [authOpen, setAuthOpen] = useState(false)
@@ -71,26 +96,28 @@ export function Navigation() {
               ))}
             </div>
 
-            {/* CTA Buttons */}
-            <div className="hidden lg:flex items-center gap-3">
-              <Button
-                variant="ghost"
-                className="text-foreground"
-                onClick={() => setAuthOpen(true)} // ✅ OPEN MODAL
-              >
-                Sign In
-              </Button>
+    {user ? (
+  <div className="flex items-center gap-3">
+    <Image
+      src={user.profileImage || "/user.png"}
+      alt="profile"
+      width={40}
+      height={40}
+      className="rounded-full border"
+    />
+    <p className="text-sm">{user.name}</p>
+  </div>
+) : (
+  <div className="flex items-center gap-3">
+    <Button onClick={() => setAuthOpen(true)}>Sign In</Button>
+    <Button onClick={() => setAuthOpen(true)}>Get Started</Button>
+  </div>
+)}
 
-              <Button
-                className="bg-primary hover:bg-primary/90 text-primary-foreground rounded-full px-6"
-                onClick={() => setAuthOpen(true)} // ✅ OPEN MODAL
-              >
-                Get Started
-              </Button>
-            </div>
 
             {/* Mobile Menu Button */}
             <button
+              type="button"
               onClick={() => setIsOpen(!isOpen)}
               className="lg:hidden p-2 rounded-lg hover:bg-primary/10 transition-colors"
             >
@@ -121,7 +148,7 @@ export function Navigation() {
                     </Link>
                   ))}
 
-                  {/* Mobile Auth Buttons */}
+                  
                   <div className="flex flex-col gap-2 mt-4 pt-4 border-t border-border">
                     <Button
                       variant="ghost"
