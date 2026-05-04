@@ -5,7 +5,9 @@ const paymentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  name: String,
   amount: Number,
+
 }, { timestamps: true });
 
 export default mongoose.model("Payment", paymentSchema);

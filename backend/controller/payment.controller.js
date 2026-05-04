@@ -6,14 +6,36 @@ import User from "../models/user.model.js";
 export const createOrder = async (req, res) => {
   try {
     const { amount } = req.body;
+    // const name = req.user.name;
+    
+console.log("REQ BODY:", req.body);
+console.log("FINAL AMOUNT:", amount);
+
+    if (!amount || amount <= 0) {
+      return res.status(400).json({ message: "Invalid amount" });
+    }
+
+    console.log("Received amount:", amount); 
 
     const order = await razorpay.orders.create({
-      amount: amount * 100,
+      amount: amount * 100, 
       currency: "INR",
     });
 
+    // ✅ Pehle DB save karo
+    // const newPayment = new Payment({
+    //   name,
+    //   amount,
+    //   razorpayOrderId: order.id,
+    // });
+
+    // await newPayment.save();
+
+    // ✅ Fir response bhejo
     res.json(order);
+
   } catch (err) {
+    console.log(err);
     res.status(500).json({ message: "Order failed" });
   }
 };
@@ -38,7 +60,6 @@ export const verifyPayment = async (req, res) => {
       return res.status(400).json({ message: "Invalid payment" });
     }
 
-    // ✅ prevent duplicate
     const existing = await Payment.findOne({
       paymentId: razorpay_payment_id,
     });
@@ -47,7 +68,6 @@ export const verifyPayment = async (req, res) => {
       return res.json({ success: true });
     }
 
-    // ✅ get real amount from DB (recommended)
     const orderData = await Order.findOne({ orderId: razorpay_order_id });
 
     await Payment.create({
