@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Send, Linkedin, Github, Twitter, Check, Building2 } from "lucide-react"
+import { Mail, Phone, MapPin,Instagram, Send, Linkedin, Github, Twitter, Check, Building2 } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -30,8 +30,8 @@ const contactInfo = [
 ]
 
 const socialLinks = [
-  { icon: Linkedin, label: "LinkedIn", href: "#" },
-  { icon: Github, label: "GitHub", href: "#" },
+  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/carboniq426?utm_source=qr&igsh=MWg3aW15OXA4cng3Nw%3D%3D" },
+  { icon: Github, label: "Facebook", href: "#" },
   { icon: Twitter, label: "Twitter", href: "#" },
 ]
 
